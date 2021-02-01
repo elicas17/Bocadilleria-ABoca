@@ -89,8 +89,8 @@ function cargarBocadillos() {
 					<li> ${item2}</li>
 				`
 			}
-			anadir();
-			
+			anadirBoca();
+			quitarBoca();
 		  }
 	};
 }
@@ -138,11 +138,42 @@ function cargarCarro(){
 		}
 	}
 }
-function anadir(){
-	console.log(document.getElementById("cantidad-boca-1").innerHTML);
-	document.getElementById("anadir-boca-1").addEventListener('click',boca1=()=>{
+function anadirBoca(){
+
+	// console.log(document.getElementById("cantidad-boca-1").innerHTML);
+
+		document.getElementById("anadir-boca-1").addEventListener('click',boca1=()=>{
 		cant_boca_1= parseInt(document.getElementById("cantidad-boca-1").innerHTML)+1 ;
 		document.getElementById("cantidad-boca-1").innerHTML=cant_boca_1;
+		})
+		document.getElementById("anadir-boca-2").addEventListener('click',boca2=()=>{
+		cant_boca_2= parseInt(document.getElementById("cantidad-boca-2").innerHTML)+1 ;
+		document.getElementById("cantidad-boca-2").innerHTML=cant_boca_2;
+		})
+		document.getElementById("anadir-boca-3").addEventListener('click',boca3=()=>{
+		cant_boca_3= parseInt(document.getElementById("cantidad-boca-3").innerHTML)+1 ;
+		document.getElementById("cantidad-boca-3").innerHTML=cant_boca_3;
+		})
+}
+function quitarBoca(){
+	if(parseInt(document.getElementById("cantidad-boca-1").innerHTML)>0){
+		document.getElementById("quitar-boca-1").addEventListener('click',boca1=()=>{
+		cant_boca_1= parseInt(document.getElementById("cantidad-boca-1").innerHTML)-1 ;
+		document.getElementById("cantidad-boca-1").innerHTML=cant_boca_1;
+		})
+	}
+	if(parseInt(document.getElementById("cantidad-boca-2").innerHTML)>0){
+		document.getElementById("quitar-boca-2").addEventListener('click',boca2=()=>{
+		cant_boca_2= parseInt(document.getElementById("cantidad-boca-2").innerHTML)-1 ;
+		document.getElementById("cantidad-boca-2").innerHTML=cant_boca_2;
+		})
+	}
+	if(parseInt(document.getElementById("cantidad-boca-3").innerHTML)>0){
+		document.getElementById("quitar-boca-3").addEventListener('click',boca3=()=>{
+		cant_boca_3= parseInt(document.getElementById("cantidad-boca-3").innerHTML)-1 ;
+		document.getElementById("cantidad-boca-3").innerHTML=cant_boca_3;
+		})
+	}	
 
-	})
+
 }
