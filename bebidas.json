@@ -1,0 +1,20 @@
+[
+    {
+      "id": 1,
+      "nombre":"zumo de naranja",
+      "precio": "6.20", 
+      "src":"zumo-naranja.png"
+    },
+    {
+      "id": 2,
+      "nombre":"mate de mango",
+      "precio": "4.20",
+      "src":"mate-mango.png"
+    },
+    {
+      "id": 3,
+      "nombre":"mate de limon",
+      "precio": "4.20",
+      "src":"mate-limon.png"
+    }
+]

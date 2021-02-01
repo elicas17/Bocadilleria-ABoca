@@ -1,0 +1,21 @@
+body{
+    max-width: 900px;
+    margin: auto;
+}
+
+#c-productos{
+    display: flex;
+}
+
+.c-desplazamiento{ 
+    width: 100%;
+    margin-top: 50px;
+}
+.c-arrow-izq, .c-arrow-dch{ 
+    display: inline-block;
+    width: auto;
+    padding: 10px;
+}
+.c-arrow-dch{
+    float: right;
+}
