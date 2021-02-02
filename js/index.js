@@ -26,17 +26,22 @@ function cargarCarro() {
 		xhttp.onreadystatechange = function () {
 			if (this.readyState == 4 && this.status == 200) {
 				let datos = JSON.parse(this.responseText);
-
-				let res = document.querySelector("#tbody");
-				res.innerHTML += '';
-				for (let item of datos) {
-					res.innerHTML += `
-					<tr>
-						<td id=table-boca-nombre-${item.id}>${item.nombre}</td>
-						<td id="table-boca-cantidad-${item.id}">0</td>
-						<td id="table-boca-precio-${item.id}">0</td>
-					</tr>
-				`
+				
+				var pedidoViejo = JSON.parse(localStorage.getItem("datosPedido"));
+				for (x of pedidoViejo) {
+					let res = document.querySelector("#tbody");
+					res.innerHTML += '';
+					for (let item of datos) {
+						if(item.nombre==x.nombre){
+							res.innerHTML += `
+								<tr>
+									<td id=table-boca-nombre-${item.id}>${item.nombre}</td>
+									<td id="table-boca-cantidad-${item.id}">${x.cantidad}</td>
+									<td id="table-boca-precio-${item.id}">0</td>
+								</tr>
+								`
+						}
+					}
 				}
 			}
 		};
