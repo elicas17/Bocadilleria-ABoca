@@ -3,7 +3,10 @@ body{
     margin: auto;
 }
 
-#c-productos{
+#c-productos-bocadillos{
+    display: flex;
+}
+#c-productos-bebidas{
     display: flex;
 }
 

@@ -2,21 +2,21 @@
     {
       "id": 1,
       "nombre":"bocata de pollo",
-      "precio": "12.50",
+      "precio": 12.50,
       "src":"bocata1.png",
       "ingredientes": ["pan de semillas sesamo","lechuga","tomate","pollo","salsa especial","cebolla asada"]
     },
     {
       "id": 2,
-      "nombre":"bocata atun",
-      "precio": "8.50",
+      "nombre":"bocata de atun",
+      "precio": 8.50,
       "src":"bocata2.png",
       "ingredientes": ["pan rustica","atun","lechuga","tomate","pollo","mayonesa","cebolla picada","jugo de limon"]
     },
     {
       "id": 3,
       "nombre":"bocata vegetal",
-      "precio": "14.50",
+      "precio": 14.50,
       "src":"bocata3.png",
       "ingredientes": ["pan chapata","lechuga","tomate","pollo","salsa especial","cebolla asada","verduras varias pochadas"]
     }
