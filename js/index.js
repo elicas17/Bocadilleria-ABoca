@@ -1,73 +1,174 @@
-window.onload = () => {
-	// carga la info de los .json dentro de un div
-	cargarBocadillos();
-	cargarBebidas();
+window.onload = () => { 
+	JsonDatos = [];
 
-	// crea tabla carro
-	cargarCarro();
-
-	cargarFunciones();
+	
+	$.ajax({
+		url: "bocadillos.json",
+		success: function(result) {
+			//Aquí tenemos la respuesta de la petición en caso de éxito 
+			console.log("aki1")
+			for(x of result){
+				JsonDatos.push(x);
+			}
+		},
+		error: function(error) {
+			//Aquí tenemos la respuesta de la petición en caso de error
+			alert("Ha ocurrido un error. No es posible comunicarse con el servidor");
+		}
+	});
+	
+	$.ajax({
+		url: "bebidas.json",
+		success: function(result) {
+			//Aquí tenemos la respuesta de la petición en caso de éxito 
+			console.log("aki2")
+			for(x of result){
+				JsonDatos.push(x);
+			}
+		},
+		error: function(error) {
+			//Aquí tenemos la respuesta de la petición en caso de error
+			alert("Ha ocurrido un error. No es posible comunicarse con el servidor");
+		}
+	}); 
+	// getBocadillos();
+	// getBebidas();
+	anadirLocalStore(JsonDatos);
+	
 }
-function cargarFunciones() {
-	// cargar en localstorage todos los producto, tmb se almacenara ahi el pedido
-	anadirLocalStore();
+// const getBebidas = () => {
+// 	var usebebidas = new Promise((resolve, reject) => {
+// 		var xhttp = new XMLHttpRequest();
+// 		xhttp.open('GET', 'bebidas.json');
+// 		xhttp.responseType = 'json';
+// 		xhttp.send();
+// 		xhttp.onload = function () {
+// 			if (xhttp.status == 200) {
+// 				resolve(xhttp.response)
+// 			} else {
+// 				reject("resuesta erronea");
+// 			}
+// 		}
+// 	});
+// 	usebebidas
+// 		.then(respuesta => {
+// 			for (x of respuesta) {
+// 				JsonDatos.push(x);
+// 			}
+			
+// 		})
+// 		.catch(error => {
+// 			console.log(error + "-bebi");
+// 		});
+// }
+// const getBocadillos = () => {
+// 	var usebocadillos = new Promise((resolve, reject) => {
+// 		var xhttp = new XMLHttpRequest();
+// 		xhttp.open('GET', 'bocadillos.json');
+// 		xhttp.responseType = 'json';
+// 		xhttp.send();
+// 		xhttp.onload = function () {
+// 			if (xhttp.status == 200) {
+// 				resolve(xhttp.response)
+// 			} else {
+// 				reject("resuesta erronea");
+// 			}
+// 		}
+// 	});
+// 	usebocadillos
+// 		.then(respuesta => {
+// 			for (x of respuesta) {
+// 				JsonDatos.push(x);
+// 			}
+// 			anadirLocalStore(JsonDatos);
+// 		})
+// 		.catch(error => {
+// 			console.log(error + "-boca");
+// 		});
 
-	// menu
-	// document.getElementById("menuBoca").addEventListener('click', cargarBocadillos);
-	// document.getElementById("menuBebi").addEventListener('click', cargarBebidas);
+// }
+function anadirLocalStore(datos) {
+	var obj = [];
+	console.log(datos);
+	// if (localStorage.getItem('datosPedido') == undefined) {
+		console.log("aki3")
+		for (let item of datos) {
+			if (item.nombre == "bocata de pollo" || item.nombre == "bocata de atun" || item.nombre == "bocata vegetal") {
+				obj.push(JSON.parse(JSON.stringify({
+					bebida: `${item.nombre}`,
+					frio: 0,
+					templado: 0,
+					precio: item.precio,
+					cantidad: 0,
+					total: 0
+				})));
+			}
+
+		}
+		for (let item of datos) {
+			if (item.nombre == "zumo de naranja" || item.nombre == "mate de mango" || item.nombre == "mate de limon") {
+				obj.push(JSON.parse(JSON.stringify({
+					bocata: `${item.nombre}`,
+					precio: item.precio,
+					cantidad: 0,
+					total: 0
+				})));
+			}
+			console.log(obj);
+		}
+
+		localStorage.setItem('datosPedido', JSON.stringify(obj));
+	// }
 
 }
 function cargarCarro() {
 	let res = document.querySelector("#tbody");
-	if (res.innerHTML.length > 0) {
-		var xhttp = new XMLHttpRequest();
-		xhttp.open('GET', 'bocadillos.json', true);
-		xhttp.send();
-		xhttp.onreadystatechange = function () {
-			if (this.readyState == 4 && this.status == 200) {
-				let datos = JSON.parse(this.responseText);
-				
-				var pedidoViejo = JSON.parse(localStorage.getItem("datosPedido"));
+	var pedidoViejo = JSON.parse(localStorage.getItem("datosPedido"));
+
+	var xhttp = new XMLHttpRequest();
+	xhttp.open('GET', 'bocadillos.json', true);
+	xhttp.send();
+	xhttp.onreadystatechange = function () {
+		if (this.readyState == 4 && this.status == 200) {
+			let datos = JSON.parse(this.responseText);
+
+			for (let item of datos) {
 				for (x of pedidoViejo) {
-					let res = document.querySelector("#tbody");
-					res.innerHTML += '';
-					for (let item of datos) {
-						if(item.nombre==x.nombre){
-							res.innerHTML += `
+					if (item.nombre == x.bocata) {
+						res.innerHTML += `
 								<tr>
 									<td id=table-boca-nombre-${item.id}>${item.nombre}</td>
 									<td id="table-boca-cantidad-${item.id}">${x.cantidad}</td>
-									<td id="table-boca-precio-${item.id}">0</td>
+									<td id="table-boca-precio-${item.id}">${x.total}</td>
 								</tr>
 								`
-						}
 					}
 				}
 			}
-		};
-		var xhttp = new XMLHttpRequest();
-		xhttp.open('GET', 'bebidas.json', true);
-		xhttp.send();
-		xhttp.onreadystatechange = function () {
-			if (this.readyState == 4 && this.status == 200) {
-				let datos = JSON.parse(this.responseText);
-
-				let res = document.querySelector("#tbody");
-				res.innerHTML += '';
-				for (let item of datos) {
-					res.innerHTML += `
-					<tr>
-						<td id=table-bebi-nombre-${item.id}>${item.nombre}</td>
-						<td id=table-bebi-cantidad-${item.id}>0</td>
-						<td id=table-bebi-precio-${item.id}>0</td>
-					</tr>
-				`
+		}
+	};
+	var xhttp = new XMLHttpRequest();
+	xhttp.open('GET', 'bebidas.json', true);
+	xhttp.send();
+	xhttp.onreadystatechange = function () {
+		if (this.readyState == 4 && this.status == 200) {
+			let datos = JSON.parse(this.responseText);
+			for (let item of datos) {
+				for (x of pedidoViejo) {
+					if (item.nombre == x.bebida) {
+						res.innerHTML += `
+								<tr>
+									<td id=table-bebi-nombre-${item.id}>${item.nombre}</td>
+									<td id=table-bebi-cantidad-${item.id}>${x.cantidad}</td>
+									<td id=table-bebi-precio-${item.id}>${x.total}</td>
+								</tr>
+								`
+					}
 				}
-
 			}
+
 		}
 	}
-
 
 }
 function cargarLocalTabla(boton) {
@@ -121,57 +222,9 @@ function cargarLocalTabla(boton) {
 		}
 	}
 }
-function cargarLocalDiv() {
-	var pedidoViejo = JSON.parse(localStorage.getItem("datosPedido"));
-	for (x of pedidoViejo) {
-		if (x.bocata == 'bocata de pollo') {
-			console.log(document.getElementById("cantidad-boca-1"));
-
-			// document.getElementById("cantidad-boca-1").innerHTML = x.cantidad;
-		}
-	}
-}
-function anadirLocalStore() {
-	var obj = [];
-	if (localStorage.getItem('datosPedido') != undefined && localStorage.getItem('Sidebar')) {
-		var xhttp = new XMLHttpRequest();
-		xhttp.open('GET', 'bebidas.json', true);
-		xhttp.send();
-		xhttp.onreadystatechange = function () {
-			if (this.readyState == 4 && this.status == 200) {
-				let datos = JSON.parse(this.responseText);
-				for (let item of datos) {
-					obj.push(JSON.parse(JSON.stringify({
-						bebida: `${item.nombre}`,
-						estado: "",
-						precio: item.precio,
-						cantidad: 0,
-						total: 0
-					})));
-
-				}
-			}
-		};
-		var xhttp = new XMLHttpRequest();
-		xhttp.open('GET', 'bocadillos.json', true);
-		xhttp.send();
-		xhttp.onreadystatechange = function () {
-			if (this.readyState == 4 && this.status == 200) {
-				let datos = JSON.parse(this.responseText);
-				for (let item of datos) {
-					obj.push(JSON.parse(JSON.stringify({
-						bocata: `${item.nombre}`,
-						precio: item.precio,
-						cantidad: 0,
-						total: 0
-					})));
-				}
-				localStorage.setItem('datosPedido', JSON.stringify(obj));
-			}
-		};
-	}
-}
 function cargarBebidas() {
+	var pedidoViejo = JSON.parse(localStorage.getItem("datosPedido"));
+
 	var xhttp = new XMLHttpRequest();
 	xhttp.open('GET', 'bebidas.json', true);
 	xhttp.send();
@@ -179,39 +232,44 @@ function cargarBebidas() {
 		if (this.readyState == 4 && this.status == 200) {
 			let datos = JSON.parse(this.responseText);
 			let res = document.querySelector("#c-productos-bebidas");
-			res.innerHTML = ' ';
+
 			for (let item of datos) {
-				res.innerHTML += `
-					<div class="c-produc">
-						<div>
-							<img src="images/${item.src}" width="200">
-						</div>
-						<div>
-							<p>${item.nombre}</p>
-							<p>${item.precio}</p>
-							<div>
-								<input type="radio" id="bebi-frio-${item.id}">
-								<label for="bebi-frio-${item.id}">Frio</label>
-						
-								<input type="radio" id="bebi-templa-${item.id}">
-								<label for="bebi-templa-${item.id}">Templado</label>
-							</div>
-							
-						</div>
-						<div>
-							<button id="quitar-bebi-${item.id}">Quitar</button>
-							<p id="cantidad-bebi-${item.id}">0</p>
-							<button id="anadir-bebi-${item.id}">Añadir</button>
-						</div>
-					</div>	
-				`
+				for (x of pedidoViejo) {
+					if (item.nombre == x.bebida) {
+						res.innerHTML += `
+							<div class="c-produc">
+								<div>
+									<img src="images/${item.src}" width="200">
+								</div>
+								<div>
+									<p>${item.nombre}</p>
+									<p>${item.precio}</p>
+									<div>
+										<input type="radio" id="bebi-frio-${item.id}">
+										<label for="bebi-frio-${item.id}">Frio</label>
+								
+										<input type="radio" id="bebi-templa-${item.id}">
+										<label for="bebi-templa-${item.id}">Templado</label>
+									</div>
+									
+								</div>
+								<div>
+									<button id="quitar-bebi-${item.id}">Quitar</button>
+									<p id="cantidad-bebi-${item.id}">${x.cantidad}</p>
+									<button id="anadir-bebi-${item.id}">Añadir</button>
+								</div>
+							</div>	
+						`
+					}
+				}
+
 			}
-			anadirBebi();
-			quitarBebi();
 		}
 	};
 }
 function cargarBocadillos() {
+	var pedidoViejo = JSON.parse(localStorage.getItem("datosPedido"));
+
 	var xhttp = new XMLHttpRequest();
 	xhttp.open('GET', 'bocadillos.json', true);
 	xhttp.send();
@@ -220,47 +278,53 @@ function cargarBocadillos() {
 			let datos = JSON.parse(this.responseText);
 
 			let res = document.querySelector("#c-productos-bocadillos");
-			res.innerHTML = '';
 			for (let item of datos) {
-				res.innerHTML += `
-					<div class="c-produc">
-						<div>
-							<img src="images/${item.src}" width="200">
-						</div>
-						<div>
-							<p>${item.nombre}</p>
-							<p>${item.precio}</p>
-							<div>
-								<ul id="c-ingre-${item.id}"></ul>
-							</div>
-						</div>
-						<div>
-							<button id="quitar-boca-${item.id}">Quitar</button>
-							<p id="cantidad-boca-${item.id}">0</p>
-							<button id="anadir-boca-${item.id}">Añadir</button>
-						</div>
-					</div>	
-				`
-				var conte_ingre = document.getElementById(`c-ingre-${item.id}`);
+				for (x of pedidoViejo) {
+					if (item.nombre == x.bocata) {
+						res.innerHTML += `
+							<div class="c-produc">
+								<div>
+									<img src="images/${item.src}" width="200">
+								</div>
+								<div>
+									<p>${item.nombre}</p>
+									<p>${item.precio}</p>
+									<div>
+										<ul id="c-ingre-${item.id}">
 
-				for (let item2 of item.ingredientes)
-					conte_ingre.innerHTML += `
-					<li> ${item2}</li>
-				`
+										</ul>
+									</div>
+								</div>
+								<div>
+									<button id="quitar-boca-${item.id}">Quitar</button>
+									<p id="cantidad-boca-${item.id}">${x.cantidad}</p>
+									<button id="anadir-boca-${item.id}">Añadir</button>
+								</div>
+							</div>	
+						`
+						var conte_ingre = document.getElementById(`c-ingre-${item.id}`);
+
+						for (let item2 of item.ingredientes)
+							conte_ingre.innerHTML += `
+							<li> ${item2}</li>
+						`
+					}
+				}
+
 			}
-			anadirBoca();
-			quitarBoca();
+
 		}
 	};
 }
 function anadirBoca() {
+
 	document.getElementById("anadir-boca-1").addEventListener('click', boca1 = () => {
 		var pedidoViejo = JSON.parse(localStorage.getItem("datosPedido"));
 		for (x of pedidoViejo) {
 			if (x.bocata == 'bocata de pollo') {
 				x.cantidad = x.cantidad + 1;
 				x.total = x.cantidad * x.precio;
-				document.getElementById("cantidad-boca-1").innerHTML = x.cantidad
+				document.getElementById("cantidad-boca-1").innerHTML = x.cantidad;
 			}
 		}
 		localStorage.setItem("datosPedido", JSON.stringify(pedidoViejo));
@@ -337,42 +401,7 @@ function quitarBoca() {
 	});
 }
 function anadirBebi() {
-	document.getElementById("anadir-bebi-1").addEventListener('click', bebi1 = () => {
-		var pedidoViejo = JSON.parse(localStorage.getItem("datosPedido"));
-		for (x of pedidoViejo) {
-			if (x.bebida == 'zumo de naranja') {
-				x.cantidad = x.cantidad + 1;
-				x.total = x.cantidad * x.precio;
-				document.getElementById("cantidad-bebi-1").innerHTML = x.cantidad;
-			}
-		}
-		localStorage.setItem("datosPedido", JSON.stringify(pedidoViejo));
-		cargarLocalTabla("btnBe1");
-	})
-	document.getElementById("anadir-bebi-2").addEventListener('click', bebi2 = () => {
-		var pedidoViejo = JSON.parse(localStorage.getItem("datosPedido"));
-		for (x of pedidoViejo) {
-			if (x.bebida == 'mate de mango') {
-				x.cantidad = x.cantidad + 1;
-				x.total = x.cantidad * x.precio;
-				document.getElementById("cantidad-bebi-2").innerHTML = x.cantidad;
-			}
-		}
-		localStorage.setItem("datosPedido", JSON.stringify(pedidoViejo));
-		cargarLocalTabla("btnBe2");
-	})
-	document.getElementById("anadir-bebi-3").addEventListener('click', bebi3 = () => {
-		var pedidoViejo = JSON.parse(localStorage.getItem("datosPedido"));
-		for (x of pedidoViejo) {
-			if (x.bebida == 'mate de limon') {
-				x.cantidad = x.cantidad + 1;
-				x.total = x.cantidad * x.precio;
-				document.getElementById("cantidad-bebi-3").innerHTML = x.cantidad;
-			}
-		}
-		localStorage.setItem("datosPedido", JSON.stringify(pedidoViejo));
-		cargarLocalTabla("btnBe3");
-	})
+
 }
 function quitarBebi() {
 	document.getElementById("quitar-bebi-1").addEventListener('click', bebi1 = () => {
