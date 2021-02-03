@@ -1,6 +1,7 @@
 window.onload = () => {
 	JsonDatos = [];
 	obj = [];
+	localOtraVez=false;
 
 	$.ajax({
 		url: "bocadillos.json",
@@ -18,6 +19,10 @@ window.onload = () => {
 						total: 0
 					})));
 				}
+			}
+			if(localStorage.getItem('datosPedido')==undefined){ 
+				localOtraVez=true;
+				localStorage.setItem('datosPedido', JSON.stringify(obj));
 			}
 			cargarCarroBoca(result);
 			cargarBocadillos(result);
@@ -47,6 +52,9 @@ window.onload = () => {
 						total: 0
 					})));
 				}
+			} 
+			if(localOtraVez==true){
+				localStorage.setItem('datosPedido', JSON.stringify(obj)); 
 			}
 			cargarCarroBebi(result);
 			cargarBebidas(result);
@@ -62,8 +70,8 @@ window.onload = () => {
 }
 
 cargarCarroBoca = (datos) => {
-	let res = document.querySelector("#tbody");
-	var pedidoViejo = JSON.parse(localStorage.getItem("datosPedido"));
+	let res = document.querySelector("#tbody"); 
+	var pedidoViejo = JSON.parse(localStorage.getItem("datosPedido")); 
 	for (let item of datos) {
 		for (x of pedidoViejo) {
 			if (item.nombre == x.bocata) {
@@ -178,20 +186,16 @@ function cargarBebidas(datos) {
 							</div>	
 						`
 			}
+			
 		}
-	}
+	} 
+	 anadirBebi(); 
+	 quitarBebi();
+
 }
-function cargarBocadillos() {
+function cargarBocadillos(datos) {
 	var pedidoViejo = JSON.parse(localStorage.getItem("datosPedido"));
-
-	var xhttp = new XMLHttpRequest();
-	xhttp.open('GET', 'bocadillos.json', true);
-	xhttp.send();
-	xhttp.onreadystatechange = function () {
-		if (this.readyState == 4 && this.status == 200) {
-			let datos = JSON.parse(this.responseText);
-
-			let res = document.querySelector("#c-productos-bocadillos");
+	 let res = document.querySelector("#c-productos-bocadillos");
 			for (let item of datos) {
 				for (x of pedidoViejo) {
 					if (item.nombre == x.bocata) {
@@ -225,15 +229,13 @@ function cargarBocadillos() {
 					}
 				}
 			
-			}
-	 document.getElementById("anadir-boca-1").addEventListener('click',()=>{
-		 console.log(document.getElementById("anadir-boca-1").innerHTML);
-	 });
-		}
-	};
+			} 
+		anadirBoca();
+		quitarBoca(); 
+	 
 }
 function anadirBoca() { 
-	document.getElementById("anadir-boca-1").addEventListener('click', boca1 = () => {
+	document.getElementById("anadir-boca-1").addEventListener('click',  () => {
 		var pedidoViejo = JSON.parse(localStorage.getItem("datosPedido"));
 		for (x of pedidoViejo) {
 			if (x.bocata == 'bocata de pollo') {
@@ -245,7 +247,7 @@ function anadirBoca() {
 		localStorage.setItem("datosPedido", JSON.stringify(pedidoViejo));
 		cargarLocalTabla("btnBo1");
 	})
-	document.getElementById("anadir-boca-2").addEventListener('click', boca2 = () => {
+	document.getElementById("anadir-boca-2").addEventListener('click',  () => {
 		var pedidoViejo = JSON.parse(localStorage.getItem("datosPedido"));
 		for (x of pedidoViejo) {
 			if (x.bocata == 'bocata de atun') {
@@ -257,7 +259,7 @@ function anadirBoca() {
 		localStorage.setItem("datosPedido", JSON.stringify(pedidoViejo));
 		cargarLocalTabla("btnBo2");
 	})
-	document.getElementById("anadir-boca-3").addEventListener('click', boca3 = () => {
+	document.getElementById("anadir-boca-3").addEventListener('click',  () => {
 		var pedidoViejo = JSON.parse(localStorage.getItem("datosPedido"));
 		for (x of pedidoViejo) {
 			if (x.bocata == 'bocata vegetal') {
@@ -271,7 +273,7 @@ function anadirBoca() {
 	})
 }
 function quitarBoca() {
-	document.getElementById("quitar-boca-1").addEventListener('click', boca1 = () => {
+	document.getElementById("quitar-boca-1").addEventListener('click',  () => {
 		var pedidoViejo = JSON.parse(localStorage.getItem("datosPedido"));
 		for (x of pedidoViejo) {
 			if (x.bocata == 'bocata de pollo') {
@@ -286,7 +288,7 @@ function quitarBoca() {
 		cargarLocalTabla("btnBo1");
 
 	});
-	document.getElementById("quitar-boca-2").addEventListener('click', boca2 = () => {
+	document.getElementById("quitar-boca-2").addEventListener('click',  () => {
 		var pedidoViejo = JSON.parse(localStorage.getItem("datosPedido"));
 		for (x of pedidoViejo) {
 			if (x.bocata == 'bocata de atun') {
@@ -300,7 +302,7 @@ function quitarBoca() {
 		localStorage.setItem("datosPedido", JSON.stringify(pedidoViejo));
 		cargarLocalTabla("btnBo2");
 	});
-	document.getElementById("quitar-boca-3").addEventListener('click', boca3 = () => {
+	document.getElementById("quitar-boca-3").addEventListener('click', () => {
 		var pedidoViejo = JSON.parse(localStorage.getItem("datosPedido"));
 		for (x of pedidoViejo) {
 			if (x.bocata == 'bocata vegetal') {
@@ -316,10 +318,45 @@ function quitarBoca() {
 	});
 }
 function anadirBebi() {
-
+	document.getElementById("anadir-bebi-1").addEventListener('click', () => {
+		var pedidoViejo = JSON.parse(localStorage.getItem("datosPedido"));
+		for (x of pedidoViejo) {
+			if (x.bebida == 'zumo de naranja') {
+				x.cantidad = x.cantidad + 1;
+				x.total = x.cantidad * x.precio;
+				document.getElementById("cantidad-bebi-1").innerHTML = x.cantidad;
+			}
+		}
+		localStorage.setItem("datosPedido", JSON.stringify(pedidoViejo));
+		cargarLocalTabla("btnBe1");
+	})
+	document.getElementById("anadir-bebi-2").addEventListener('click',  () => {
+		var pedidoViejo = JSON.parse(localStorage.getItem("datosPedido"));
+		for (x of pedidoViejo) {
+			if (x.bebida == 'mate de mango') {
+				x.cantidad = x.cantidad + 1;
+				x.total = x.cantidad * x.precio;
+				document.getElementById("cantidad-bebi-2").innerHTML = x.cantidad;
+			}
+		}
+		localStorage.setItem("datosPedido", JSON.stringify(pedidoViejo));
+		cargarLocalTabla("btnBe2");
+	})
+	document.getElementById("anadir-bebi-3").addEventListener('click', () => {
+		var pedidoViejo = JSON.parse(localStorage.getItem("datosPedido"));
+		for (x of pedidoViejo) {
+			if (x.bebida == 'mate de limon') {
+				x.cantidad = x.cantidad + 1;
+				x.total = x.cantidad * x.precio;
+				document.getElementById("cantidad-bebi-3").innerHTML = x.cantidad;
+			}
+		}
+		localStorage.setItem("datosPedido", JSON.stringify(pedidoViejo));
+		cargarLocalTabla("btnBe3");
+	})
 }
 function quitarBebi() {
-	document.getElementById("quitar-bebi-1").addEventListener('click', bebi1 = () => {
+	document.getElementById("quitar-bebi-1").addEventListener('click',   () => {
 		var pedidoViejo = JSON.parse(localStorage.getItem("datosPedido"));
 		for (x of pedidoViejo) {
 			if (x.bebida == 'zumo de naranja') {
@@ -333,7 +370,7 @@ function quitarBebi() {
 		localStorage.setItem("datosPedido", JSON.stringify(pedidoViejo));
 		cargarLocalTabla("btnBe1");
 	});
-	document.getElementById("quitar-bebi-2").addEventListener('click', bebi2 = () => {
+	document.getElementById("quitar-bebi-2").addEventListener('click',  () => {
 		var pedidoViejo = JSON.parse(localStorage.getItem("datosPedido"));
 		for (x of pedidoViejo) {
 			if (x.bebida == 'mate de mango') {
@@ -347,7 +384,7 @@ function quitarBebi() {
 		localStorage.setItem("datosPedido", JSON.stringify(pedidoViejo));
 		cargarLocalTabla("btnBe2");
 	});
-	document.getElementById("quitar-bebi-3").addEventListener('click', bebia3 = () => {
+	document.getElementById("quitar-bebi-3").addEventListener('click',  () => {
 		var pedidoViejo = JSON.parse(localStorage.getItem("datosPedido"));
 		for (x of pedidoViejo) {
 			if (x.bebida == 'mate de limon') {
