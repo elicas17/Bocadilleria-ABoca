@@ -224,9 +224,11 @@ function cargarBocadillos() {
 						`
 					}
 				}
-
+			
 			}
-
+	 document.getElementById("anadir-boca-1").addEventListener('click',()=>{
+		 console.log(document.getElementById("anadir-boca-1").innerHTML);
+	 });
 		}
 	};
 }
