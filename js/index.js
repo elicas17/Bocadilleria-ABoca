@@ -82,7 +82,7 @@ cargarCarroBoca = (datos) => {
 									<td id="table-boca-precio-${item.id}">${x.total}</td>
 								</tr>
 								`
-			}
+			} 
 		}
 	}
 }
@@ -170,11 +170,13 @@ function cargarBebidas(datos) {
 									<p>${item.nombre}</p>
 									<p>${item.precio}</p>
 									<div>
-										<input type="radio" id="bebi-frio-${item.id}">
-										<label for="bebi-frio-${item.id}">Frio</label>
-								
-										<input type="radio" id="bebi-templa-${item.id}">
-										<label for="bebi-templa-${item.id}">Templado</label>
+										<form>
+											<input name="tempe" type="radio" id="bebi-frio-${item.id}" checked>
+											<label for="bebi-frio-${item.id}">Frio</label>
+									
+											<input name="tempe" type="radio" id="bebi-templa-${item.id}">
+											<label for="bebi-templa-${item.id}">Templado</label>
+										</form>
 									</div>
 									
 								</div>
@@ -182,6 +184,11 @@ function cargarBebidas(datos) {
 									<button id="quitar-bebi-${item.id}">Quitar</button>
 									<p id="cantidad-bebi-${item.id}">${x.cantidad}</p>
 									<button id="anadir-bebi-${item.id}">Añadir</button>
+								</div>
+								<div>
+									<p style="color:red;">*Selecciona la temperatura de la botella que quieras quitar.</p>
+									<p >Botellas frias: <label id="extra-bebi-frio-${item.id}">${x.frio}</label></p>
+									<p>Botellas templadas: <label id="extra-bebi-temple-${item.id}">${x.templado}</label></p>
 								</div>
 							</div>	
 						`
@@ -242,6 +249,7 @@ function anadirBoca() {
 				x.cantidad = x.cantidad + 1;
 				x.total = x.cantidad * x.precio;
 				document.getElementById("cantidad-boca-1").innerHTML = x.cantidad;
+				// document.getElementById("table-total").innerHTML=x.total;
 			}
 		}
 		localStorage.setItem("datosPedido", JSON.stringify(pedidoViejo));
@@ -323,7 +331,13 @@ function anadirBebi() {
 		for (x of pedidoViejo) {
 			if (x.bebida == 'zumo de naranja') {
 				x.cantidad = x.cantidad + 1;
-				x.total = x.cantidad * x.precio;
+				x.total = x.cantidad * x.precio; 
+				if (document.getElementById("bebi-frio-1").checked) {
+					x.frio=x.frio+1;
+					document.getElementById("cantidad-bebi-1").innerHTML = x.cantidad;
+				}else{
+					x.templado=x.templado+1;
+				} 
 				document.getElementById("cantidad-bebi-1").innerHTML = x.cantidad;
 			}
 		}
@@ -336,6 +350,11 @@ function anadirBebi() {
 			if (x.bebida == 'mate de mango') {
 				x.cantidad = x.cantidad + 1;
 				x.total = x.cantidad * x.precio;
+				if (document.getElementById("bebi-frio-2").checked) {
+					x.frio=x.frio+1;
+				}else{
+					x.templado=x.templado+1;
+				} 
 				document.getElementById("cantidad-bebi-2").innerHTML = x.cantidad;
 			}
 		}
@@ -348,6 +367,11 @@ function anadirBebi() {
 			if (x.bebida == 'mate de limon') {
 				x.cantidad = x.cantidad + 1;
 				x.total = x.cantidad * x.precio;
+				if (document.getElementById("bebi-frio-3").checked) {
+					x.frio=x.frio+1;
+				}else{
+					x.templado=x.templado+1;
+				} 
 				document.getElementById("cantidad-bebi-3").innerHTML = x.cantidad;
 			}
 		}
@@ -359,10 +383,27 @@ function quitarBebi() {
 	document.getElementById("quitar-bebi-1").addEventListener('click',   () => {
 		var pedidoViejo = JSON.parse(localStorage.getItem("datosPedido"));
 		for (x of pedidoViejo) {
-			if (x.bebida == 'zumo de naranja') {
-				if (x.cantidad > 0) {
-					x.cantidad = x.cantidad - 1;;
-					x.total = x.cantidad * x.precio;
+			if (x.bebida == 'zumo de naranja') { 
+				if (x.cantidad > 0) { 
+					if (document.getElementById("bebi-frio-1").checked) { 
+						if(x.frio>0){
+							x.cantidad = x.cantidad - 1;;
+							x.total = x.cantidad * x.precio;  
+							x.frio=x.frio-1;
+							document.getElementById("extra-bebi-frio-1").innerHTML = x.frio;
+						}else{
+							alert('No tienes bebidad frias en el carro');
+						}
+					}else{
+						if(x.templado>0){
+							x.cantidad = x.cantidad - 1;;
+							x.total = x.cantidad * x.precio;  
+							x.templado=x.templado-1;
+							document.getElementById("extra-bebi-temple-1").innerHTML = x.frio; 
+						}else{
+							alert('No tienes bebidad al tiempo en el carro');
+						}
+					} 
 					document.getElementById("cantidad-bebi-1").innerHTML = x.cantidad;
 				}
 			}
@@ -375,8 +416,25 @@ function quitarBebi() {
 		for (x of pedidoViejo) {
 			if (x.bebida == 'mate de mango') {
 				if (x.cantidad > 0) {
-					x.cantidad = x.cantidad - 1;;
-					x.total = x.cantidad * x.precio;
+					if (document.getElementById("bebi-frio-2").checked) { 
+						if(x.frio>0){
+							x.cantidad = x.cantidad - 1;;
+							x.total = x.cantidad * x.precio;  
+							x.frio=x.frio-1;
+							document.getElementById("extra-bebi-frio-2").innerHTML = x.frio;
+						}else{
+							alert('No tienes bebidad frias en el carro');
+						}
+					}else{
+						if(x.templado>0){
+							x.cantidad = x.cantidad - 1;;
+							x.total = x.cantidad * x.precio;  
+							x.templado=x.templado-1;
+							document.getElementById("extra-bebi-temple-2").innerHTML = x.frio; 
+						}else{
+							alert('No tienes bebidad al tiempo en el carro');
+						}
+					} 
 					document.getElementById("cantidad-bebi-2").innerHTML = x.cantidad;
 				}
 			}
@@ -389,8 +447,25 @@ function quitarBebi() {
 		for (x of pedidoViejo) {
 			if (x.bebida == 'mate de limon') {
 				if (x.cantidad > 0) {
-					x.cantidad = x.cantidad - 1;;
-					x.total = x.cantidad * x.precio;
+					if (document.getElementById("bebi-frio-3").checked) { 
+						if(x.frio>0){
+							x.cantidad = x.cantidad - 1;;
+							x.total = x.cantidad * x.precio;  
+							x.frio=x.frio-1;
+							document.getElementById("extra-bebi-frio-3").innerHTML = x.frio;
+						}else{
+							alert('No tienes bebidad frias en el carro');
+						}
+					}else{
+						if(x.templado>0){
+							x.cantidad = x.cantidad - 1;;
+							x.total = x.cantidad * x.precio;  
+							x.templado=x.templado-1;
+							document.getElementById("extra-bebi-temple-3").innerHTML = x.frio; 
+						}else{
+							alert('No tienes bebidad al tiempo en el carro');
+						}
+					} 
 					document.getElementById("cantidad-bebi-3").innerHTML = x.cantidad;
 				}
 			}
