@@ -65,10 +65,21 @@ window.onload = () => {
 		}
 	});
 
-	
+	document.getElementById("imprimirCuenta").addEventListener('click',imprimirCuenta);
 
 }
+imprimirCuenta=()=>{
+	// window.print();
+	var doc =window.open('','width=800','heigth=600');
+	var tabla=document.getElementById("c-table").innerHTML;
 
+	doc.document.write('<html><head><title>Factura Pedido</title></head>'); 
+	doc.document.write('<body>');
+	doc.document.write('<table>'+ tabla +'</table>');
+	doc.document.write('</body></html>');
+	doc.document.close();
+	doc.print();
+}
 cargarCarroBoca = (datos) => {
 	let total=0;
 	let res = document.querySelector("#tbody"); 

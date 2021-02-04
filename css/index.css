@@ -1,6 +1,16 @@
+html{
+    background-image:linear-gradient(rgba(255,255,255,.1), rgba(255,255,255,.3)), url("../images/fondo-tabla-verduras-colorido.jpg") ;
+    background-repeat:no-repeat;
+    background-size: 100% 100%;
+    background-attachment: fixed; 
+    width: 100%; 
+}
+
 body{
-    max-width: 900px;
+    max-width: 950px;
     margin: auto;
+    font-family: 'Caveat', cursive;
+    background: rgba(139, 195, 169, 0.582);
 }
 
 #c-productos-bocadillos{
@@ -21,4 +31,8 @@ body{
 }
 .c-arrow-dch{
     float: right;
+}
+
+@media only screen and (max-width: 1000px) {
+
 }

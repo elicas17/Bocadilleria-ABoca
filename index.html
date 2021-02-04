@@ -9,8 +9,13 @@
         integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />	
     <link  rel="icon"   href="images/favicon.ico" type="image/png" />
     <title>Document</title>
+    <!-- google fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap" rel="stylesheet">
+    <!-- jquery -->
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
     </script>
+    <!-- css -->
+    <link href="css/header.css" rel="stylesheet" type="text/css">
     <link href="css/index.css" rel="stylesheet" type="text/css">
 </head>
 
@@ -46,8 +51,8 @@
         </div>
     </div>
 
-    <div class="carro">
-        <table>
+    <div id="c-carro" class="carro">
+        <table id="c-table">
             <caption>Carro</caption>
             <thead>
                 <tr>
@@ -66,6 +71,7 @@
                 
             </tbody>
         </table>
+        <button id="imprimirCuenta">Imprimir Cuenta</button>
     </div>
     <script type="text/javascript" src="js/index.js"></script>
 </body>
