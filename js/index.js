@@ -70,6 +70,7 @@ window.onload = () => {
 }
 
 cargarCarroBoca = (datos) => {
+	let total=0;
 	let res = document.querySelector("#tbody"); 
 	var pedidoViejo = JSON.parse(localStorage.getItem("datosPedido")); 
 	for (let item of datos) {
@@ -82,14 +83,17 @@ cargarCarroBoca = (datos) => {
 									<td id="table-boca-precio-${item.id}">${x.total}</td>
 								</tr>
 								`
-			} 
+
+								total=total+x.total; 
+			}
 		}
 	}
+	document.getElementById("table-total").innerHTML=total;
 }
 cargarCarroBebi = (datos) => {
 	let res = document.querySelector("#tbody");
 	var pedidoViejo = JSON.parse(localStorage.getItem("datosPedido"));
-
+	let total=document.getElementById("table-total").innerHTML;
 	for (let item of datos) {
 		for (x of pedidoViejo) {
 			if (item.nombre == x.bebida) {
@@ -100,6 +104,7 @@ cargarCarroBebi = (datos) => {
 									<td id=table-bebi-precio-${item.id}>${x.total}</td>
 								</tr>
 								`
+				total+total+x.total;
 			}
 		}
 	}
@@ -243,19 +248,22 @@ function cargarBocadillos(datos) {
 }
 function anadirBoca() { 
 	document.getElementById("anadir-boca-1").addEventListener('click',  () => {
+		let total=0;
 		var pedidoViejo = JSON.parse(localStorage.getItem("datosPedido"));
 		for (x of pedidoViejo) {
 			if (x.bocata == 'bocata de pollo') {
 				x.cantidad = x.cantidad + 1;
 				x.total = x.cantidad * x.precio;
-				document.getElementById("cantidad-boca-1").innerHTML = x.cantidad;
-				// document.getElementById("table-total").innerHTML=x.total;
+				document.getElementById("cantidad-boca-1").innerHTML = x.cantidad; 
 			}
-		}
+			total=total+x.total; 
+		} 
+		document.getElementById("table-total").innerHTML=total;
 		localStorage.setItem("datosPedido", JSON.stringify(pedidoViejo));
 		cargarLocalTabla("btnBo1");
 	})
-	document.getElementById("anadir-boca-2").addEventListener('click',  () => {
+	document.getElementById("anadir-boca-2").addEventListener('click',  () => { 
+		let total=0;
 		var pedidoViejo = JSON.parse(localStorage.getItem("datosPedido"));
 		for (x of pedidoViejo) {
 			if (x.bocata == 'bocata de atun') {
@@ -263,11 +271,14 @@ function anadirBoca() {
 				x.total = x.cantidad * x.precio;
 				document.getElementById("cantidad-boca-2").innerHTML = x.cantidad;
 			}
+			total=total+x.total;
 		}
+		document.getElementById("table-total").innerHTML=total;
 		localStorage.setItem("datosPedido", JSON.stringify(pedidoViejo));
 		cargarLocalTabla("btnBo2");
 	})
 	document.getElementById("anadir-boca-3").addEventListener('click',  () => {
+		let total=0;
 		var pedidoViejo = JSON.parse(localStorage.getItem("datosPedido"));
 		for (x of pedidoViejo) {
 			if (x.bocata == 'bocata vegetal') {
@@ -275,13 +286,16 @@ function anadirBoca() {
 				x.total = x.cantidad * x.precio;
 				document.getElementById("cantidad-boca-3").innerHTML = x.cantidad;
 			}
+			total=total+x.total;
 		}
+		document.getElementById("table-total").innerHTML=total;
 		localStorage.setItem("datosPedido", JSON.stringify(pedidoViejo));
 		cargarLocalTabla("btnBo3");
 	})
 }
 function quitarBoca() {
 	document.getElementById("quitar-boca-1").addEventListener('click',  () => {
+		let total=0;
 		var pedidoViejo = JSON.parse(localStorage.getItem("datosPedido"));
 		for (x of pedidoViejo) {
 			if (x.bocata == 'bocata de pollo') {
@@ -291,12 +305,15 @@ function quitarBoca() {
 					document.getElementById("cantidad-boca-1").innerHTML = x.cantidad;
 				}
 			}
+			total=total+x.total;
 		}
+		document.getElementById("table-total").innerHTML=total;
 		localStorage.setItem("datosPedido", JSON.stringify(pedidoViejo));
 		cargarLocalTabla("btnBo1");
 
 	});
 	document.getElementById("quitar-boca-2").addEventListener('click',  () => {
+		let total=0;
 		var pedidoViejo = JSON.parse(localStorage.getItem("datosPedido"));
 		for (x of pedidoViejo) {
 			if (x.bocata == 'bocata de atun') {
@@ -306,11 +323,14 @@ function quitarBoca() {
 					document.getElementById("cantidad-boca-2").innerHTML = x.cantidad;
 				}
 			}
+			total=total+x.total;
 		}
+		document.getElementById("table-total").innerHTML=total;
 		localStorage.setItem("datosPedido", JSON.stringify(pedidoViejo));
 		cargarLocalTabla("btnBo2");
 	});
 	document.getElementById("quitar-boca-3").addEventListener('click', () => {
+		let total=0;
 		var pedidoViejo = JSON.parse(localStorage.getItem("datosPedido"));
 		for (x of pedidoViejo) {
 			if (x.bocata == 'bocata vegetal') {
@@ -320,13 +340,16 @@ function quitarBoca() {
 					document.getElementById("cantidad-boca-3").innerHTML = x.cantidad;
 				}
 			}
+			total=total+x.total;
 		}
+		document.getElementById("table-total").innerHTML=total;
 		localStorage.setItem("datosPedido", JSON.stringify(pedidoViejo));
 		cargarLocalTabla("btnBo3");
 	});
 }
 function anadirBebi() {
 	document.getElementById("anadir-bebi-1").addEventListener('click', () => {
+		let total=0;
 		var pedidoViejo = JSON.parse(localStorage.getItem("datosPedido"));
 		for (x of pedidoViejo) {
 			if (x.bebida == 'zumo de naranja') {
@@ -335,16 +358,21 @@ function anadirBebi() {
 				if (document.getElementById("bebi-frio-1").checked) {
 					x.frio=x.frio+1;
 					document.getElementById("cantidad-bebi-1").innerHTML = x.cantidad;
+					document.getElementById("extra-bebi-frio-1").innerHTML=x.frio;
 				}else{
 					x.templado=x.templado+1;
+					document.getElementById("extra-bebi-temple-1").innerHTML=x.templado;
 				} 
 				document.getElementById("cantidad-bebi-1").innerHTML = x.cantidad;
 			}
+			total=total+x.total;
 		}
+		document.getElementById("table-total").innerHTML=total;
 		localStorage.setItem("datosPedido", JSON.stringify(pedidoViejo));
 		cargarLocalTabla("btnBe1");
 	})
 	document.getElementById("anadir-bebi-2").addEventListener('click',  () => {
+		let total=0;
 		var pedidoViejo = JSON.parse(localStorage.getItem("datosPedido"));
 		for (x of pedidoViejo) {
 			if (x.bebida == 'mate de mango') {
@@ -352,16 +380,22 @@ function anadirBebi() {
 				x.total = x.cantidad * x.precio;
 				if (document.getElementById("bebi-frio-2").checked) {
 					x.frio=x.frio+1;
+					document.getElementById("cantidad-bebi-2").innerHTML = x.cantidad;
+					document.getElementById("extra-bebi-frio-2").innerHTML=x.frio;
 				}else{
 					x.templado=x.templado+1;
+					document.getElementById("extra-bebi-temple-2").innerHTML=x.templado;
 				} 
 				document.getElementById("cantidad-bebi-2").innerHTML = x.cantidad;
 			}
+			total=total+x.total;
 		}
+		document.getElementById("table-total").innerHTML=total;
 		localStorage.setItem("datosPedido", JSON.stringify(pedidoViejo));
 		cargarLocalTabla("btnBe2");
 	})
 	document.getElementById("anadir-bebi-3").addEventListener('click', () => {
+		let total=0;
 		var pedidoViejo = JSON.parse(localStorage.getItem("datosPedido"));
 		for (x of pedidoViejo) {
 			if (x.bebida == 'mate de limon') {
@@ -369,18 +403,24 @@ function anadirBebi() {
 				x.total = x.cantidad * x.precio;
 				if (document.getElementById("bebi-frio-3").checked) {
 					x.frio=x.frio+1;
+					document.getElementById("cantidad-bebi-3").innerHTML = x.cantidad;
+					document.getElementById("extra-bebi-frio-3").innerHTML=x.frio;
 				}else{
 					x.templado=x.templado+1;
+					document.getElementById("extra-bebi-temple-3").innerHTML=x.templado;
 				} 
 				document.getElementById("cantidad-bebi-3").innerHTML = x.cantidad;
 			}
+			total=total+x.total;
 		}
+		document.getElementById("table-total").innerHTML=total;
 		localStorage.setItem("datosPedido", JSON.stringify(pedidoViejo));
 		cargarLocalTabla("btnBe3");
 	})
 }
 function quitarBebi() {
 	document.getElementById("quitar-bebi-1").addEventListener('click',   () => {
+		let total=0;
 		var pedidoViejo = JSON.parse(localStorage.getItem("datosPedido"));
 		for (x of pedidoViejo) {
 			if (x.bebida == 'zumo de naranja') { 
@@ -392,7 +432,7 @@ function quitarBebi() {
 							x.frio=x.frio-1;
 							document.getElementById("extra-bebi-frio-1").innerHTML = x.frio;
 						}else{
-							alert('No tienes bebidad frias en el carro');
+							alert('No tienes bebidas frias en el carro');
 						}
 					}else{
 						if(x.templado>0){
@@ -401,17 +441,21 @@ function quitarBebi() {
 							x.templado=x.templado-1;
 							document.getElementById("extra-bebi-temple-1").innerHTML = x.frio; 
 						}else{
-							alert('No tienes bebidad al tiempo en el carro');
+							alert('No tienes bebidas al tiempo en el carro');
 						}
 					} 
 					document.getElementById("cantidad-bebi-1").innerHTML = x.cantidad;
 				}
-			}
+			} 
+			total=total+x.total;
+			
 		}
+		document.getElementById("table-total").innerHTML=total;
 		localStorage.setItem("datosPedido", JSON.stringify(pedidoViejo));
 		cargarLocalTabla("btnBe1");
 	});
 	document.getElementById("quitar-bebi-2").addEventListener('click',  () => {
+		let total=0;
 		var pedidoViejo = JSON.parse(localStorage.getItem("datosPedido"));
 		for (x of pedidoViejo) {
 			if (x.bebida == 'mate de mango') {
@@ -438,11 +482,14 @@ function quitarBebi() {
 					document.getElementById("cantidad-bebi-2").innerHTML = x.cantidad;
 				}
 			}
+			total=total+x.total;
 		}
+		document.getElementById("table-total").innerHTML=total;
 		localStorage.setItem("datosPedido", JSON.stringify(pedidoViejo));
 		cargarLocalTabla("btnBe2");
 	});
 	document.getElementById("quitar-bebi-3").addEventListener('click',  () => {
+		let total=0;
 		var pedidoViejo = JSON.parse(localStorage.getItem("datosPedido"));
 		for (x of pedidoViejo) {
 			if (x.bebida == 'mate de limon') {
@@ -469,7 +516,9 @@ function quitarBebi() {
 					document.getElementById("cantidad-bebi-3").innerHTML = x.cantidad;
 				}
 			}
+			total=total+x.total;
 		}
+		document.getElementById("table-total").innerHTML=total;
 		localStorage.setItem("datosPedido", JSON.stringify(pedidoViejo));
 		cargarLocalTabla("btnBe3");
 	});
