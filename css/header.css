@@ -1,5 +1,26 @@
-
-
 header{
+    display: flex;
     width: 100%;
+}
+
+.c-logo{
+     
+    width: 30%;
+    height: 200px;
+    display: flex;
+}
+.c-logo img{
+    width: 95%;
+    margin: auto;   
+}
+.c-mensaje{
+    width: 70%;
+    display: flex;
+    justify-content: center;
+}
+.c-mensaje p{   
+    text-align:center;  
+    width: auto;
+    margin: auto;
+    display: block;
 }

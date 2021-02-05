@@ -5,12 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- iconos -->
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
-        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />	
-    <link  rel="icon"   href="images/favicon.ico" type="image/png" />
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <link rel="icon" href="images/favicon.ico" type="image/png" />
     <title>Document</title>
     <!-- google fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&display=swap" rel="stylesheet">
     <!-- jquery -->
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
     </script>
@@ -25,7 +27,8 @@
             <img src="images/logo_bocata.png" width="200">
         </div>
         <div class="c-mensaje">
-            <p>"Tus sueños empiezan aqui..."</p>
+            <p>"Bienvenida al paraiso de la variedad..."</p>
+            <p>"A-Boca te llevara a tu limite gustativo..."</p>
         </div>
     </header>
     <div class="contenido">
@@ -34,45 +37,49 @@
                 <li id="menuBoca">Bocadillos</li>
                 <li id="menuBebi">Bebidas</li>
                 <li id="menuCarro">Carro</li>
-                <li id="menuCuenta">Cuenta</li>
-            </ul>
+                <li id="menuFinalizar">Finalizar pedido
+                    <span class="tooltipFinalizar">
+                        <p>Quieres finalizar el pedido? Se borraran todos los datos</p>
+                        <button id="resetLocal">Aceptar</button>
+                    </span>
+                </li>
+            </ul> 
         </div>
         <div id="c-productos">
             <div id="c-productos-bocadillos"></div>
             <div id="c-productos-bebidas"></div>
         </div>
-        <div class="c-desplazamiento">
-            <div class="c-arrow-izq">
-                <i class="fas fa-arrow-circle-left"></i>
-            </div>
-            <div class="c-arrow-dch">
-                <i class="fas fa-arrow-circle-right"></i>
-            </div>
+        <div id="c-carro" class="c-carro">
+            <table id="c-table">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Precio</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <td colspan="2">Total</td>
+                        <td><span id="table-total"> 0</span>€</td>
+                    </tr>
+                </tfoot>
+                <tbody id="tbody">
+
+                </tbody>
+            </table>
+            <button id="imprimirCuenta">Imprimir Cuenta</button>
+        </div>
+    </div>
+    <div class="c-desplazamiento">
+        <div class="c-arrow-izq">
+            <i class="fas fa-arrow-circle-left fa-2x"></i>
+        </div>
+        <div class="c-arrow-dch">
+            <i class="fas fa-arrow-circle-right fa-2x"></i>
         </div>
     </div>
 
-    <div id="c-carro" class="carro">
-        <table id="c-table">
-            <caption>Carro</caption>
-            <thead>
-                <tr>
-                    <th>Producto</th>
-                    <th>Cantidad</th>
-                    <th>Precio</th>
-                </tr>
-            </thead>
-            <tfoot>
-                <tr>
-                    <td colspan="2">Total</td>
-                    <td id="table-total">0</td>
-                </tr>
-            </tfoot>
-            <tbody id="tbody">
-                
-            </tbody>
-        </table>
-        <button id="imprimirCuenta">Imprimir Cuenta</button>
-    </div>
     <script type="text/javascript" src="js/index.js"></script>
 </body>
 
