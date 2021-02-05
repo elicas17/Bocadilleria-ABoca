@@ -24,3 +24,16 @@ header{
     margin: auto;
     display: block;
 }
+
+
+@media (max-width:700px) {
+    .c-mensaje{
+        display: block;
+    }
+    .c-mensaje p{   
+        width: 300px;
+        margin-top:30px;
+    }
+
+
+}

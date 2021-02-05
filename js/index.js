@@ -1,47 +1,73 @@
 window.onload = () => {
-	let empezarNuevo=false;
-	
+	let empezarNuevo = false;
+
 	cargarAjax(true);
 
-	
-	document.getElementById("resetLocal").addEventListener('click', ()=>{
-		empezarNuevo=true;
+
+	document.getElementById("resetLocal").addEventListener('click', () => {
+		empezarNuevo = true;
 		cargarAjax(empezarNuevo);
 	});
 
 }
+function cambiarVista() { 
+	var conBebi = document.getElementById("c-productos-bebidas");
+	var conBoca = document.getElementById("c-productos-bocadillos");
+	var conCarro = document.getElementById("c-carro");
+ 
+		conBebi.style.display = "none";
+		conBoca.style.display = "block";
+		conCarro.style.display = "none";
+	 
+	document.getElementById("menuBebi").addEventListener('click', () => {
+		conBoca.style.display = "none";
+		conCarro.style.display = "none"; 
+			conBebi.style.display = "block";  
+	});
+	document.getElementById("menuBoca").addEventListener('click', () => {
+		conBebi.style.display = "none";
+		conCarro.style.display = "none"; 
+			conBoca.style.display = "flex";
+		 
+	});
+	document.getElementById("menuCarro").addEventListener('click', () => {
+		conBebi.style.display = "none";
+		conBoca.style.display = "none";
+		conCarro.style.display = "block";
 
-cargarAjax=()=>{
+	});
+}
+cargarAjax = () => {
 	obj = [];
 	localOtraVez = false;
 
 	if (localStorage.getItem('datosPedido') != undefined) {
 		localStorage.removeItem('datosPedido');
-	}  
+	}
 	$.ajax({
 		url: "bocadillos.json",
-		success: function (result) {  
-			cargarLocalBoca(result); 
+		success: function (result) {
+			cargarLocalBoca(result);
 		},
-		error: function (error) { 
+		error: function (error) {
 			alert("Ha ocurrido un error. No es posible comunicarse con el servidor");
 		}
 	});
 
 	$.ajax({
 		url: "bebidas.json",
-		success: function (result) { 
-			 cargarLocalBebi(result); 
+		success: function (result) {
+			cargarLocalBebi(result);
 		},
-		error: function (error) { 
+		error: function (error) {
 			alert("Ha ocurrido un error. No es posible comunicarse con el servidor");
 		}
 	});
-	
+
 	cambiarVista();
-	document.getElementById("imprimirCuenta").addEventListener('click', imprimirCuenta);	
+	document.getElementById("imprimirCuenta").addEventListener('click', imprimirCuenta);
 }
-cargarLocalBoca=(result)=>{
+cargarLocalBoca = (result) => {
 	for (let item of result) {
 		if (item.nombre == "bocata de pollo" || item.nombre == "bocata de atun" || item.nombre == "bocata vegetal") {
 			obj.push(JSON.parse(JSON.stringify({
@@ -60,7 +86,7 @@ cargarLocalBoca=(result)=>{
 	cargarBocadillos(result);
 }
 
-cargarLocalBebi=(result)=>{
+cargarLocalBebi = (result) => {
 	for (let item of result) {
 		if (item.nombre == "zumo de naranja" || item.nombre == "mate de mango" || item.nombre == "mate de limon") {
 			obj.push(JSON.parse(JSON.stringify({
@@ -75,7 +101,7 @@ cargarLocalBebi=(result)=>{
 	}
 	if (localOtraVez == true) {
 		localStorage.setItem('datosPedido', JSON.stringify(obj));
-	} 
+	}
 	cargarCarroBebi(result);
 	cargarBebidas(result);
 }
@@ -91,27 +117,7 @@ imprimirCuenta = () => {
 	doc.document.close();
 	doc.print();
 }
-function cambiarVista(){
-	var conBebi=document.getElementById("c-productos-bebidas");
-	var conBoca=document.getElementById("c-productos-bocadillos");
-	var conCarro=document.getElementById("c-carro");
 
-	document.getElementById("menuBebi").addEventListener('click',()=>{
-		conBoca.style.display="none";
-		conCarro.style.display="none";
-		conBebi.style.display="flex"; 
-	});
-	document.getElementById("menuBoca").addEventListener('click',()=>{
-		conBebi.style.display="none";
-		conCarro.style.display="none";
-		conBoca.style.display="flex"; 
-	});
-	document.getElementById("menuCarro").addEventListener('click',()=>{
-		conBebi.style.display="none";
-		conBoca.style.display="none"; 
-		conCarro.style.display="block";
-	});
-}
 function mostrarIngredientes() {
 	document.getElementById("mostar-ingre-boca-1").addEventListener('click', () => {
 		if (document.getElementById("c-ingre-1").style.display == "none") {
@@ -142,7 +148,7 @@ function mostrarIngredientes() {
 cargarCarroBoca = (datos) => {
 	let total = 0;
 	let res = document.querySelector("#tbody");
-	res.innerHTML='';
+	res.innerHTML = '';
 	var pedidoViejo = JSON.parse(localStorage.getItem("datosPedido"));
 	for (let item of datos) {
 		for (x of pedidoViejo) {
@@ -235,14 +241,14 @@ function cargarBebidas(datos) {
 
 	var pedidoViejo = JSON.parse(localStorage.getItem("datosPedido"));
 	let res = document.querySelector("#c-productos-bebidas");
-	res.innerHTML='';
+	res.innerHTML = '';
 	for (let item of datos) {
 		for (x of pedidoViejo) {
 			if (item.nombre == x.bebida) {
 				res.innerHTML += `
 							<div class="c-produc">
 								<div class="img-produc">
-									<img src="images/${item.src}" width="200">
+									<img src="images/${item.src}" 
 								</div>
 								<div class="info-produc">
 									<p>${item.nombre}</p>
@@ -281,14 +287,14 @@ function cargarBebidas(datos) {
 function cargarBocadillos(datos) {
 	var pedidoViejo = JSON.parse(localStorage.getItem("datosPedido"));
 	let res = document.querySelector("#c-productos-bocadillos");
-	res.innerHTML='';
+	res.innerHTML = '';
 	for (let item of datos) {
 		for (x of pedidoViejo) {
 			if (item.nombre == x.bocata) {
 				res.innerHTML += `
 							<div class="c-produc">
 								<div class="img-produc">
-									<img class="img-bocatas" src="images/${item.src}" width="225">
+									<img class="img-bocatas" src="images/${item.src}" >
 								</div>
 								<div class="info-produc">
 									<p>${item.nombre}</p>
@@ -318,10 +324,10 @@ function cargarBocadillos(datos) {
 	anadirBoca();
 	quitarBoca();
 	mostrarIngredientes();
-	
+
 
 }
- 
+
 
 function anadirBoca() {
 	document.getElementById("anadir-boca-1").addEventListener('click', () => {
@@ -330,7 +336,7 @@ function anadirBoca() {
 		for (x of pedidoViejo) {
 			if (x.bocata == 'bocata de pollo') {
 				x.cantidad = x.cantidad + 1;
-				x.total = x.cantidad*x.precio;
+				x.total = x.cantidad * x.precio;
 				document.getElementById("cantidad-boca-1").innerHTML = x.cantidad;
 			}
 			total = total + x.total;

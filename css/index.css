@@ -1,7 +1,4 @@
-html{
-    background: rgb(228, 226, 226);
 
-}
 body{
     max-width: 950px;
     margin: auto;
@@ -9,8 +6,6 @@ body{
     background: rgb(202, 166, 149);
     font-size: 21px;
     text-transform: uppercase;
-    width:100%;
-    background: blue;
 }
 :root {
     --color-naranja: rgb(194, 113, 8);
@@ -23,21 +18,19 @@ body{
     width: 100%;
     position: relative;
 }
-.c-menu ul{  
-    width: 90%;
+.c-menu {  
+    width: 100%;
     margin: auto;
     display: flex;  
     
 }
-.c-menu ul li{
-    /* background: rgb(65, 78, 63); */
-    /* color: white; */
+.c-menu div{
     width: 200px;
     margin: 10px;
     text-align: center;
     list-style: none;
 }
-.c-menu ul li:hover{
+.c-menu div:hover{
     background:var(--color-naranja);
     border-radius: 5px;
     color: white
@@ -45,11 +38,14 @@ body{
 
 /* GENERAL BOCATAS Y BEBIDAS */
 .c-produc{
+    display: inline-block;
     border-style: solid;
-    border-width: 1px;
-    width: 30%;
-    margin: 10px;
-    margin-top:70px;
+    border-width: 2px;
+    height: 600px;
+}
+.c-produc img{
+    height: 200px;
+    width: 100%;
 }
 .botones-produc{
     display: flex;
@@ -75,9 +71,8 @@ body{
 }
 .c-produc .img-produc{
     text-align: center; 
-    width: 80%;
+    width: 100%;
     margin: auto;
-    padding: 10px;
 }
 .c-produc:hover{
     border-color: var(--color-naranja);
@@ -90,75 +85,60 @@ body{
     margin-top:70px;
 }
 
-/* BOCATAS */
 
-/* mostrar solo bocatas */
-#c-productos-bocadillos{
-    display: flex;
-    justify-content: center;
-    height: 640px;
-}
-#c-productos-bebidas{
-    display: none;
-}
-.c-carro{
-    display: none;
-}
- 
-#c-productos-bocadillos{
-    width: 100%; 
+/* BOCATAS */
+  
+.c-productos-bocadillos{
+    width: 100%;  
+    height: 700px;
 } 
-#c-productos-bocadillos .c-produc .c-todos-ingredientes p{ 
+.c-productos-bocadillos .c-produc .c-todos-ingredientes p{ 
     text-align:center;
 }
-#c-productos-bocadillos .c-produc .c-todos-ingredientes ul{ 
+.c-productos-bocadillos .c-produc .c-todos-ingredientes ul{ 
     display: none;
 }
-#c-productos-bocadillos .c-produc{
-    padding-top: 50px;
-} 
+
 .c-todos-ingredientes ul{
     background: var(--color-naranja);
     border-radius: 5px;
     width: 200px;
     margin: auto;
     font-size: 18px;
-}
+} 
 
 
 /* BEBIDAS */
-
-#c-productos-bebidas {
-   font-size: 20px;
-   height: 640px;
+ 
+.c-productos-bebidas{
+    width: 100%; 
+    height: 700px;
 }
-#c-productos-bebidas  div:last-child img{
-     width: 150px; 
-}
-#c-productos-bebidas .info-bebidas-produc{
+.c-productos-bebidas .info-bebidas-produc{
     font-size: 15px;
-    text-align: center;
-    /* background: blue; */
+    text-align: center; 
 
 }
-#c-productos-bebidas .c-form-radio{
+.c-productos-bebidas .c-form-radio{
     width: 80%;
     display: flex;
     justify-content: center;
     margin: 10px;   
 
-
 }
 
 /* CARRO */
+ 
  .c-carro{
      width: 100%;
-     height: 640px;
+     height: 690px;
      text-align: center;
+     
  }
  .c-carro table{
      width: 80%;
      margin: auto;
+     margin-top: 30px;
  }
  .c-carro table td{
     width: 100%;
@@ -216,37 +196,57 @@ body{
     border-style: none;
     background: var(--color-naranja);
   }
-
-/* "footer" */
-.c-desplazamiento{ 
-    width: 80%;
-    margin: auto;padding: 10px;
-}
-.c-arrow-izq, .c-arrow-dch{ 
-    display: inline-block;
-    width: auto;
-    padding: 10px; 
-}
-.c-arrow-dch{ 
-    float: right;
-}
-body{
     
-}
-/* @media (max-width: 850px) {
+
+@media (max-width: 850px) {
     body{
         width:100%;
-        background: blue;
+        font-size: 22px
     }
-    #c-productos{
-        width: 100%;
-    } 
-     #c-productos-bocadillos {
-         display: block;
-         background: blue;
-        width: 100%;
-    } 
-    #c-productos-bocadillos .c-produc{    
+     .c-productos-bocadillos {
         display: block;
+        /* background: blue; */
+        width: 90%;
+        margin: auto;
+        height: auto;
+    }  
+    .c-productos-bebidas {
+        width: 90%;
+        margin: auto;
+        height: auto;  
+    }  
+    .c-carro{
+        height: 630px;
     }
-} */
+    .c-produc{    
+        display: block;
+        width: 100%;
+        height: auto;
+        margin: auto;
+        margin-top:15px;
+    } 
+    .c-produc img{
+        height: 200px;
+        width: auto;
+    }
+    .c-menu{  
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        width: 100%;
+    }
+    .c-menu div{
+        margin: auto;
+        padding: 0;
+        width: 100px;
+        height: 50px;
+    }  
+}
+@media (max-width: 430px) {
+    body{ 
+        font-size: 15px
+    }
+    .c-produc img{
+        height: auto;
+        width: 100%;
+    }
+}
