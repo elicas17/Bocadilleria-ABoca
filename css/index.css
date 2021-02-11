@@ -11,30 +11,6 @@ body{
     --color-naranja: rgb(194, 113, 8);
 }
 
-/* MENU */
-
-.c-menu{
-    background:rgba(255, 255, 255, 0.705);
-    width: 100%;
-    position: relative;
-}
-.c-menu {  
-    width: 100%;
-    margin: auto;
-    display: flex;  
-    
-}
-.c-menu div{
-    width: 200px;
-    margin: 10px;
-    text-align: center;
-    list-style: none;
-}
-.c-menu div:hover{
-    background:var(--color-naranja);
-    border-radius: 5px;
-    color: white
-}
 
 /* GENERAL BOCATAS Y BEBIDAS */
 .c-produc{
@@ -159,44 +135,7 @@ body{
     
 }
 
-/* FINALIZAR */
 
-
-#menuFinalizar {
-    position: relative;
-    display: inline-block;
-  border-bottom: 1px dotted black;
-  }
-  
-#menuFinalizar .tooltipFinalizar {
-    visibility: hidden;
-    width: 300px;
-    background-color: black;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-  
-    /* Position the tooltip */
-    position: absolute;
-    z-index: 1;
-    left: -100px;
-    top:26px;
-  }
-  
-#menuFinalizar:hover .tooltipFinalizar {
-    visibility: visible;
-  }
-
-.tooltipFinalizar button{
-    font-family: 'Caveat Brush', cursive;
-    font-size: 20px;
-    padding: 5px;    
-    border-radius: 5px;
-    border-style: none;
-    background: var(--color-naranja);
-  }
-    
 
 @media (max-width: 850px) {
     body{
@@ -229,17 +168,7 @@ body{
         height: 200px;
         width: auto;
     }
-    .c-menu{  
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        width: 100%;
-    }
-    .c-menu div{
-        margin: auto;
-        padding: 0;
-        width: 100px;
-        height: 50px;
-    }  
+    
 }
 @media (max-width: 430px) {
     body{ 

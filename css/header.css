@@ -1,24 +1,113 @@
-header{
+
+
+:root{
+    --ham_size:48px;
+    --c_naranja: rgb(194, 113, 8);
+    --c_rosa:rgb(202, 166, 149);
+
+}
+/* FINALIZAR */
+
+
+#menuFinalizar {
+    position: relative;
+    border-bottom: 1px dotted black;
+   
+  }
+  
+#menuFinalizar .tooltipFinalizar {
+    visibility: hidden;
+    width: 300px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+  
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top:26px;
+  }
+   
+#menuFinalizar:hover .tooltipFinalizar {
+    visibility: visible;
+  }
+
+.tooltipFinalizar button{
+    font-family: 'Caveat Brush', cursive;
+    font-size: 20px;
+    padding: 5px;    
+    border-radius: 5px;
+    border-style: none;
+    background: var(--c_naranja);
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.empresa{
     display: flex;
     width: 100%;
+    /* height: 100px; */
+}
+header .elementos{
+    display: none
 }
 
-.c-logo{
+/* MENU */
+
+ header nav{
+    background:rgba(255, 255, 255, 0.705);
+    width: 100%;
+    position: relative;
+}
+header nav {  
+    width: 100%;
+    margin: auto;
+    display: flex;  
+    
+}
+header nav div{
+    width: 200px;
+    margin: 10px;
+    text-align: center;
+    list-style: none;
+}
+header nav div:hover{
+    background:var(--color-naranja);
+    border-radius: 5px;
+    color: white
+}
+
+/* empresa */
+.empresa .c-logo{
      
     width: 30%;
     height: 200px;
     display: flex;
 }
-.c-logo img{
+.empresa .c-logo img{
     width: 95%;
     margin: auto;   
 }
-.c-mensaje{
+.empresa .c-mensaje{
     width: 70%;
     display: flex;
     justify-content: center;
 }
-.c-mensaje p{   
+.empresa .c-mensaje p{   
     text-align:center;  
     width: auto;
     margin: auto;
@@ -26,14 +115,63 @@ header{
 }
 
 
-@media (max-width:700px) {
-    .c-mensaje{
-        display: block;
-    }
-    .c-mensaje p{   
-        width: 300px;
-        margin-top:30px;
-    }
+@media (max-width:600px) {
 
+/* HAMBURGUESA */
+    header .elementos{
+        display: block
+    }
+  
+    header nav div{
+    color: inherit;
+    text-decoration: none;
+    display: block;
+    padding: 10px 20px;
+    border-bottom: 2px solid var(--c_rosa);
+    max-width: 200px;
+    background: var(--c_naranja);
+    font-variant: small-caps;
+    text-shadow: 1px 1px black;
+  }
+  header .elementos input[type="checkbox"], .c-menu .fa-bars, .c-menu .fa-times {
+    position: absolute;  
+    margin: 0;
+    padding: 0;
+    right: 0;
+    top: 0;
+    width: var(--ham_size);
+    height:var(--ham_size);
+  }
+  header .elementos .fa-bars,header .elementos .fa-times {
+    font-size: var(--ham_size);
+    pointer-events: none;
+  }
+    
+    header .elementos input {
+    opacity: 0; 
+  }
+ 
+  header {
+    color: white;
+    position: relative; 
+    background: var(--c_naranja);
+    min-height: 48px;
+  }
+    
+  header nav {
+    /* display: none; */
+  }
+  
+  header input:checked ~ nav {
+    display: block;
+  }
+    
+  header .elementos input:checked ~ .fa-bars {
+    display: none;
+  }
+   
+  header .elementos input:not(:checked) ~ .fa-times {
+    display: none;
+  }
 
 }
