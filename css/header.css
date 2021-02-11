@@ -27,7 +27,7 @@
     /* Position the tooltip */
     position: absolute;
     z-index: 1;
-    left: 0;
+    left:-180px;
     top:26px;
   }
    
@@ -44,54 +44,44 @@
     background: var(--c_naranja);
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-.empresa{
-    display: flex;
-    width: 100%;
-    /* height: 100px; */
-}
-header .elementos{
-    display: none
+header .elementos input, header .elementos i{
+    display: none;
 }
 
 /* MENU */
 
- header nav{
+ header .elementos  nav{
     background:rgba(255, 255, 255, 0.705);
     width: 100%;
     position: relative;
 }
-header nav {  
+header .elementos  nav {  
     width: 100%;
     margin: auto;
     display: flex;  
     
 }
-header nav div{
+header .elementos nav div{
     width: 200px;
     margin: 10px;
     text-align: center;
     list-style: none;
 }
-header nav div:hover{
+header .elementos nav div:hover{
     background:var(--color-naranja);
     border-radius: 5px;
     color: white
 }
 
 /* empresa */
+
+.empresa{
+    display: flex;
+    width: 100%;
+}
+.elementos{
+    
+}
 .empresa .c-logo{
      
     width: 30%;
@@ -117,19 +107,36 @@ header nav div:hover{
 
 @media (max-width:600px) {
 
-/* HAMBURGUESA */
-    header .elementos{
-        display: block
+/* menu */
+    .c-menu{
+        display: block;
     }
-  
-    header nav div{
+    header .elementos  nav {  
+        margin: 0;
+    }
+    header .elementos nav div{
+        text-align: left;
+    }
+
+/* HAMBURGUESA */
+:root{
+    --ham_size:35px; 
+}
+    header .elementos{
+        width: 15%;
+       
+    }
+    header .elementos input, header .elementos i{
+        display: block;
+    }
+    header .elementos nav {
     color: inherit;
     text-decoration: none;
     display: block;
     padding: 10px 20px;
     border-bottom: 2px solid var(--c_rosa);
-    max-width: 200px;
-    background: var(--c_naranja);
+    max-width: 120px;
+    background: #454948;;
     font-variant: small-caps;
     text-shadow: 1px 1px black;
   }
@@ -137,11 +144,12 @@ header nav div:hover{
     position: absolute;  
     margin: 0;
     padding: 0;
-    right: 0;
-    top: 0;
+    right: 7px;
+    top:7px;
     width: var(--ham_size);
     height:var(--ham_size);
   }
+  
   header .elementos .fa-bars,header .elementos .fa-times {
     font-size: var(--ham_size);
     pointer-events: none;
@@ -155,11 +163,15 @@ header nav div:hover{
     color: white;
     position: relative; 
     background: var(--c_naranja);
-    min-height: 48px;
+    min-height: 55px;
   }
     
-  header nav {
-    /* display: none; */
+  header .elementos nav {
+      position: absolute;
+      top: 55px;
+      right: 0;
+    display: none;
+    
   }
   
   header input:checked ~ nav {
@@ -173,5 +185,27 @@ header nav div:hover{
   header .elementos input:not(:checked) ~ .fa-times {
     display: none;
   }
+  /* FINALIZAR */
+  #menuFinalizar .tooltipFinalizar { 
+    left:-200px;
+  }
 
+  .empresa{ 
+      max-height: 50px;
+  }
+
+    .empresa .c-logo{
+        max-height: 55px;
+    }
+    .empresa .c-mensaje{
+        width: 50%;
+    }
+    .empresa .c-logo img{
+        height: 100%;
+        width: auto
+    }
+
+    header .elementos nav div{
+        width: auto;
+    }
 }
